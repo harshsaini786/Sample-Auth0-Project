@@ -1,10 +1,20 @@
-export const todoList = [
-  {
-    id: 1,
-    todo: "Learn Redux"
-  },
-  {
-    id: 2,
-    todo: "Learn Hooks"
+export const loadState = () => {
+  try {
+    const serializedState = localStorage.getItem("state");
+    if (serializedState === null) {
+      return [];
+    }
+    return JSON.parse(serializedState);
+  } catch (err) {
+    return [];
   }
-];
+};
+
+export const saveState = (state) => {
+  try {
+    const serializedState = JSON.stringify(state);
+    localStorage.setItem("state", serializedState);
+  } catch {
+    
+  }
+};

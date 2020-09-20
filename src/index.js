@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import Login from "./Login";
+import PageNotFound from "./PageNotFound";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import {
@@ -15,7 +16,7 @@ const rootElement = document.getElementById("root");
 
 const Routing = () => {
   const history = useHistory();
-  let isLoggedIn = false;
+  let isLoggedIn = true;
 
   if (!isLoggedIn) {
     history.push("/");
@@ -23,20 +24,23 @@ const Routing = () => {
   }
   return (
     <Switch>
-      <Route exact path="/">
-        <App />
-      </Route>
+      <Provider store={store}>
+        <Route exact path="/">
+          <App />
+        </Route>
+        <Route>
+          <PageNotFound />
+        </Route>
+      </Provider>
     </Switch>
   );
 };
 
 ReactDOM.render(
   <Router>
-    <Provider store={store}>
-      <React.StrictMode>
-        <Routing />
-      </React.StrictMode>
-    </Provider>
+    <React.StrictMode>
+      <Routing />
+    </React.StrictMode>
   </Router>,
   rootElement
 );
