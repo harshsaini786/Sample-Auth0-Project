@@ -1,0 +1,44 @@
+.app {
+  width: 50%;
+  margin: 2% auto;
+  border-style: double;
+}
+
+.todoInput {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todoInput input {
+  flex: 1;
+}
+
+button {
+  margin: auto 5px !important;
+}
+
+.todoList {
+  margin: 15px 10px;
+  overflow-y: auto;
+  height: 330px;
+}
+
+.modalContentCustom {
+  margin: 5px 10px;
+}
+
+.todoItems {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.todoItems > span {
+  flex: 1;
+}
+
+i {
+  cursor: pointer;
+}
