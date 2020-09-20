@@ -5,6 +5,8 @@ import Login from "./Login";
 import PageNotFound from "./PageNotFound";
 import { Provider } from "react-redux";
 import store from "./redux/store";
+import NavBar from "./Components/NavBar";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
 import {
   Switch,
   Route,
@@ -12,35 +14,51 @@ import {
   useHistory
 } from "react-router-dom";
 
+const DOMAIN_NAME = "harshsaini.us.auth0.com";
+const CLIENT_ID = "8IG0lqb2O40ksM0LD596RMtV3pX8USCK";
+
 const rootElement = document.getElementById("root");
 
 const Routing = () => {
   const history = useHistory();
-  let isLoggedIn = true;
+  const { isLoading, isAuthenticated, user } = useAuth0();
 
-  if (!isLoggedIn) {
+  if (isLoading) return <div>Loading...</div>;
+
+  if (!isAuthenticated) {
     history.push("/");
     return <Login />;
   }
+  console.log(user);
+  localStorage.setItem("user", JSON.stringify(user));
+
   return (
-    <Switch>
-      <Provider store={store}>
+    <Provider store={store}>
+      <Switch>
         <Route exact path="/">
           <App />
         </Route>
         <Route>
           <PageNotFound />
         </Route>
-      </Provider>
-    </Switch>
+      </Switch>
+    </Provider>
   );
 };
 
 ReactDOM.render(
-  <Router>
-    <React.StrictMode>
-      <Routing />
-    </React.StrictMode>
-  </Router>,
+  <Auth0Provider
+    domain={DOMAIN_NAME}
+    clientId={CLIENT_ID}
+    redirectUri={window.location.origin}
+  >
+    <Router>
+      <React.StrictMode>
+        <NavBar>
+          <Routing />
+        </NavBar>
+      </React.StrictMode>
+    </Router>
+  </Auth0Provider>,
   rootElement
 );

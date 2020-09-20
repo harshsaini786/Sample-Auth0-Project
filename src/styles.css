@@ -42,3 +42,9 @@ button {
 i {
   cursor: pointer;
 }
+
+.profilePicture{
+  width: 50px;
+    border-radius: 999px;
+    vertical-align: middle;
+}
